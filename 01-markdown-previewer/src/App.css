@@ -1,0 +1,15 @@
+
+img{
+  width: 100%;
+}
+textarea{
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 5px 10px 15px #042A2B;
+}
+#preview{
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 5px solid #042A2B;
+  box-shadow: 5px 10px 15px #042A2B;
+}
