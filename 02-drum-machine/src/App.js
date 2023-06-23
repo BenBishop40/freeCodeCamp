@@ -21,7 +21,6 @@ function App() {
             setCurrentSound(null);
         } else if (buttonID === "bank-btn") {
             togglesoundBank();
-            // gérer le code bank chgt
         }
     };
 
