@@ -1,0 +1,94 @@
+@font-face {
+  font-family: "calculator";
+  src: url('./fonts/Calculator.ttf');
+}
+.App{
+  font-family: 'Bebas Neue', sans-serif;
+  text-align: center;
+}
+.calculator{
+  max-width :520px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: end;
+  border: 5px solid darkslategray;
+  background-color: black;
+
+}
+.input-screen{
+  width:98%;
+  height: 35px;
+  font-size: 1.5em;
+  color: orange;
+  font-family: 'calculator';
+}
+.output-screen{
+  width:98%;
+  height: 55px;
+  font-size: 2.4em;
+  color: whitesmoke;
+  font-family: 'calculator';
+
+}
+#calculator-pad, td, th {
+  padding: 0;
+  min-height: fit-content;
+}
+table{
+  width: 100%;
+}
+td {
+  width: 120px;
+  height: 60px;
+}
+#calculator-pad table {
+  background-color: darkslategray;
+  margin: 0 auto;
+  border-spacing: 5px;
+}
+#calculator-pad table button {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  border: .1px solid lightgoldenrodyellow;
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px lightgoldenrodyellow;
+  cursor: pointer;
+  background-color: beige;
+  font-size: 1.6em;
+  font-family: 'Bebas Neue', sans-serif;
+  transition: .2s ease-in;
+}
+#calculator-pad table button:hover {
+  box-shadow: 2px 2px 2px lightcoral;
+  border: .2px solid lightcoral;
+
+}
+#calculator-pad table button#clear {
+  background-color: lightcoral;
+}
+#calculator-pad table button.number {
+  background-color: lightcyan;
+}
+#calculator-pad table button.operator {
+  background-color: lightslategray;
+}
+#calculator-pad table button#equals {
+  background-color: lightgreen;
+}
+
+
+/* FOOTER  */
+.footer td{
+  text-align: center;
+}
+.footer i {
+  font-size: 2em;
+  padding: 5px 10px;
+  color: black;
+  transition: .2s ease-in;
+}
+.footer i:hover {
+  color: lightgreen;
+}
