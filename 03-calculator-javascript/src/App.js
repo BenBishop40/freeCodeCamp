@@ -2,12 +2,13 @@ import "./App.css";
 import { useCallback, useEffect, useState } from "react";
 
 function App() {
-    let [display, setDisplay] = useState([]);
+    let [operationDisplay, setOperationDisplay] = useState([]);
+    let [display, setDisplay] = useState([0]);
 
-    function computeResult(display) {
-        const expression = display.join("");
+    function computeResult(operationDisplay) {
+        const expression = operationDisplay.join("");
         const result = eval(expression);
-        setDisplay([result]);
+        return result;
     }
 
     const handlePressEqual = useCallback(
@@ -28,27 +29,50 @@ function App() {
     }, [handlePressEqual]);
 
     function handleClick(event) {
+        // if (operationDisplay.find((item) => item === "=")) {
+        //     setDisplay([0]);
+        //     setOperationDisplay([0]);
+        // }
+
         if (event.target.value === "AC") {
-            setDisplay("");
+            setDisplay([0]);
+            setOperationDisplay([]);
         } else {
             const newDigit = event.target.value;
             const regExpNumbersOnly = /^[0-9]/;
-            const regExpOperatorsOnly = /^[+\-/*]$/;
+            const regExpOperatorsOnly = /^[+-/*]$/;
             if (newDigit.match(regExpNumbersOnly)) {
                 console.log(typeof newDigit);
-                if (newDigit) {
-                    let displayTxt = [...display, Number(newDigit)];
+                if (display[0] === 0 && display[1] !== "." && newDigit !== ".") {
+                    const displayTxt = [Number(newDigit)];
                     setDisplay(displayTxt);
+                    setOperationDisplay(displayTxt);
+                } else if (display[0] === 0 && display[1] === ".") {
+                    const displayTxt = [...display, Number(newDigit)];
+                    setDisplay(displayTxt);
+                    setOperationDisplay(displayTxt);
+                } else if (operationDisplay.includes("=")) {
+                    console.log(operationDisplay.includes("="));
+                    setDisplay([newDigit]);
+                    setOperationDisplay([newDigit]);
+                } else if (newDigit) {
+                    const displayTxt = [...display, Number(newDigit)];
+                    setDisplay(displayTxt);
+                    setOperationDisplay(displayTxt);
                 }
                 console.log(display);
             } else if (newDigit.match(regExpOperatorsOnly)) {
                 console.log(typeof newDigit);
                 if (newDigit) {
-                    let displayTxt = [...display, newDigit];
+                    const displayTxt = [...display, newDigit];
                     setDisplay(displayTxt);
+                    setOperationDisplay(displayTxt);
                 }
             } else if (newDigit === "=") {
-                computeResult(display);
+                const result = computeResult(display);
+                const displayTxt = [...display, "=", result.toString()];
+                setOperationDisplay(displayTxt);
+                setDisplay([result]);
             }
         }
     }
@@ -57,9 +81,9 @@ function App() {
         <div className="App">
             <h1>| Javascript calculator |</h1>
             <div className="calculator">
-                <div className="input-screen">{display}</div>
+                <div className="input-screen">{operationDisplay}</div>
                 <div className="output-screen" id="display">
-                    {(display = "" ? "0" : display)}
+                    {display}
                 </div>
                 <div id="calculator-pad">
                     <table>
