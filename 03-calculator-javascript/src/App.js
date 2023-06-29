@@ -29,11 +29,6 @@ function App() {
     }, [handlePressEqual]);
 
     function handleClick(event) {
-        // if (operationDisplay.find((item) => item === "=")) {
-        //     setDisplay([0]);
-        //     setOperationDisplay([0]);
-        // }
-
         if (event.target.value === "AC") {
             setDisplay([0]);
             setOperationDisplay([]);
@@ -43,12 +38,12 @@ function App() {
             const regExpOperatorsOnly = /^[+-/*]$/;
             if (newDigit.match(regExpNumbersOnly)) {
                 console.log(typeof newDigit);
-                if (display[0] === 0 && display[1] !== "." && newDigit !== ".") {
+                if (operationDisplay[0] === 0 && operationDisplay[1] !== "." && newDigit !== ".") {
                     const displayTxt = [Number(newDigit)];
                     setDisplay(displayTxt);
                     setOperationDisplay(displayTxt);
-                } else if (display[0] === 0 && display[1] === ".") {
-                    const displayTxt = [...display, Number(newDigit)];
+                } else if (operationDisplay[0] === 0 && operationDisplay[1] === ".") {
+                    const displayTxt = [...operationDisplay, Number(newDigit)];
                     setDisplay(displayTxt);
                     setOperationDisplay(displayTxt);
                 } else if (operationDisplay.includes("=")) {
@@ -56,7 +51,8 @@ function App() {
                     setDisplay([newDigit]);
                     setOperationDisplay([newDigit]);
                 } else if (newDigit) {
-                    const displayTxt = [...display, Number(newDigit)];
+                    const displayTxt = [...operationDisplay, Number(newDigit)];
+                    // const displayNum = [...operationDisplay, Number(newDigit)];
                     setDisplay(displayTxt);
                     setOperationDisplay(displayTxt);
                 }
@@ -65,12 +61,12 @@ function App() {
                 console.log(typeof newDigit);
                 if (newDigit) {
                     const displayTxt = [...display, newDigit];
-                    setDisplay(displayTxt);
+                    setDisplay(newDigit);
                     setOperationDisplay(displayTxt);
                 }
             } else if (newDigit === "=") {
-                const result = computeResult(display);
-                const displayTxt = [...display, "=", result.toString()];
+                const result = computeResult(operationDisplay);
+                const displayTxt = [...operationDisplay, "=", result.toString()];
                 setOperationDisplay(displayTxt);
                 setDisplay([result]);
             }
