@@ -1,5 +1,6 @@
 import "./App.css";
 import { useCallback, useEffect, useState } from "react";
+import { evaluate } from "mathjs";
 
 function App() {
     let [operationDisplay, setOperationDisplay] = useState([]);
@@ -7,7 +8,7 @@ function App() {
 
     function computeResult(operationDisplay) {
         const expression = operationDisplay.join("");
-        const result = eval(expression);
+        const result = evaluate(expression);
         return result;
     }
 
@@ -29,13 +30,18 @@ function App() {
     }, [handlePressEqual]);
 
     function handleClick(event) {
+        const newDigit = event.target.value;
+        const regExpNumbersOnly = /^[0-9]/;
+        const regExpOperatorsOnly = /^[+-/*]$/;
         if (event.target.value === "AC") {
             setDisplay([0]);
             setOperationDisplay([]);
+        } else if (newDigit === "=") {
+            const result = computeResult(operationDisplay);
+            const displayTxt = [...operationDisplay, "=", result.toString()];
+            setOperationDisplay(displayTxt);
+            setDisplay([result]);
         } else {
-            const newDigit = event.target.value;
-            const regExpNumbersOnly = /^[0-9]/;
-            const regExpOperatorsOnly = /^[+-/*]$/;
             if (newDigit.match(regExpNumbersOnly)) {
                 console.log(typeof newDigit);
                 if (operationDisplay[0] === 0 && operationDisplay[1] !== "." && newDigit !== ".") {
@@ -64,11 +70,6 @@ function App() {
                     setDisplay(newDigit);
                     setOperationDisplay(displayTxt);
                 }
-            } else if (newDigit === "=") {
-                const result = computeResult(operationDisplay);
-                const displayTxt = [...operationDisplay, "=", result.toString()];
-                setOperationDisplay(displayTxt);
-                setDisplay([result]);
             }
         }
     }
