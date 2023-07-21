@@ -3,11 +3,11 @@ import { useCallback, useEffect, useState } from "react";
 import { evaluate } from "mathjs";
 
 function App() {
-    let [operationDisplay, setOperationDisplay] = useState([]);
-    let [display, setDisplay] = useState([0]);
+    let [display, setDisplay] = useState([]);
+    let [currentValue, setCurrentValue] = useState([]);
 
-    function computeResult(operationDisplay) {
-        const expression = operationDisplay.join("");
+    function computeResult(display) {
+        const expression = display.join("");
         const result = evaluate(expression);
         return result;
     }
@@ -15,10 +15,10 @@ function App() {
     const handlePressEqual = useCallback(
         (event) => {
             if (event.key === "=") {
-                computeResult(display);
+                computeResult(currentValue);
             }
         },
-        [display]
+        [currentValue]
     );
 
     useEffect(() => {
@@ -31,44 +31,59 @@ function App() {
 
     function handleClick(event) {
         const newDigit = event.target.value;
-        const regExpNumbersOnly = /^[0-9]/;
+        const regExpNumbersOnly = /^[0-9]$/;
         const regExpOperatorsOnly = /^[+-/*]$/;
-        if (event.target.value === "AC") {
-            setDisplay([0]);
-            setOperationDisplay([]);
+
+        // Condition "AC" -> Clear
+        if (newDigit === "AC") {
+            setCurrentValue([0]);
+            setDisplay([]);
+
+            // Condition "=" -> Compute result display
         } else if (newDigit === "=") {
-            const result = computeResult(operationDisplay);
-            const displayTxt = [...operationDisplay, "=", result.toString()];
-            setOperationDisplay(displayTxt);
-            setDisplay([result]);
+            const result = computeResult(display);
+            const displayTxt = [...display, "=", result.toString()];
+            setDisplay(displayTxt);
+            setCurrentValue([result]);
+
+            // Condition si ajout number / operator
+        } else if (newDigit === ".") {
+            // User Story #11: Append "." to the currently displayed value
+            if (!currentValue.includes(".") && currentValue[0] !== "=") {
+                const displayTxt = [...display, newDigit];
+                const currentDisplay = [...currentValue, newDigit];
+                setCurrentValue(currentDisplay);
+                setDisplay(displayTxt);
+            }
         } else {
+            // Condition Num Only
             if (newDigit.match(regExpNumbersOnly)) {
-                console.log(typeof newDigit);
-                if (operationDisplay[0] === 0 && operationDisplay[1] !== "." && newDigit !== ".") {
+                // Suppression 0 si premier caractere
+                if (currentValue[0] === 0 && display[1] !== "." && newDigit !== ".") {
                     const displayTxt = [Number(newDigit)];
+                    setCurrentValue(displayTxt);
                     setDisplay(displayTxt);
-                    setOperationDisplay(displayTxt);
-                } else if (operationDisplay[0] === 0 && operationDisplay[1] === ".") {
-                    const displayTxt = [...operationDisplay, Number(newDigit)];
-                    setDisplay(displayTxt);
-                    setOperationDisplay(displayTxt);
-                } else if (operationDisplay.includes("=")) {
-                    console.log(operationDisplay.includes("="));
+                } else if (display.includes("=")) {
+                    setCurrentValue([newDigit]);
                     setDisplay([newDigit]);
-                    setOperationDisplay([newDigit]);
                 } else if (newDigit) {
-                    const displayTxt = [...operationDisplay, Number(newDigit)];
-                    // const displayNum = [...operationDisplay, Number(newDigit)];
+                    const displayTxt = [...display, Number(newDigit)];
+                    const currentValue = (prevValue) => [...prevValue, newDigit];
+                    setCurrentValue(currentValue);
                     setDisplay(displayTxt);
-                    setOperationDisplay(displayTxt);
                 }
-                console.log(display);
+                // Condition Operator Only
             } else if (newDigit.match(regExpOperatorsOnly)) {
-                console.log(typeof newDigit);
-                if (newDigit) {
+                // Condition multiple operateurs si pas de "=" dans display
+                if (display.length > 0 && !display.includes("=")) {
                     const displayTxt = [...display, newDigit];
-                    setDisplay(newDigit);
-                    setOperationDisplay(displayTxt);
+                    setCurrentValue(newDigit);
+                    setDisplay(displayTxt);
+                    // Si "=" -> renvoi du result dans display pour relance calcul direct avec operator
+                } else {
+                    const displayTxt = [currentValue[0], newDigit];
+                    setCurrentValue(newDigit);
+                    setDisplay(displayTxt);
                 }
             }
         }
@@ -78,9 +93,9 @@ function App() {
         <div className="App">
             <h1>| Javascript calculator |</h1>
             <div className="calculator">
-                <div className="input-screen">{operationDisplay}</div>
+                <div className="input-screen">{display}</div>
                 <div className="output-screen" id="display">
-                    {display}
+                    {currentValue}
                 </div>
                 <div id="calculator-pad">
                     <table>
