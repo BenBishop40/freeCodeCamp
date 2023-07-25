@@ -76,9 +76,33 @@ function App() {
             } else if (newDigit.match(regExpOperatorsOnly)) {
                 // Condition multiple operateurs si pas de "=" dans display
                 if (display.length > 0 && !display.includes("=")) {
-                    const displayTxt = [...display, newDigit];
-                    setCurrentValue(newDigit);
-                    setDisplay(displayTxt);
+                    // Check if the new operator comes right after another one
+                    if (
+                        regExpOperatorsOnly.test(display[display.length - 1]) &&
+                        newDigit !== "-" &&
+                        display[display.length - 1] !== "-"
+                    ) {
+                        // Remove of the previous operator
+                        const displayTxt = [...display.slice(0, -1), newDigit];
+                        const currentValueTxt = [...currentValue.slice(0, -1), newDigit];
+                        setDisplay(displayTxt);
+                        setCurrentValue(currentValueTxt);
+                    } else if (
+                        // User story 13 : condition > 2 opérators -> supprime les opérateurs
+                        regExpOperatorsOnly.test(display[display.length - 1]) &&
+                        regExpOperatorsOnly.test(display[display.length - 2])
+                    ) {
+                        // Remove of the previous operator
+                        const displayTxt = [...display.slice(0, -2), newDigit];
+                        const currentValueTxt = [...currentValue.slice(0, -2), newDigit];
+                        setDisplay(displayTxt);
+                        setCurrentValue(currentValueTxt);
+                    } else {
+                        const displayTxt = [...display, newDigit];
+                        setCurrentValue(newDigit);
+                        setDisplay(displayTxt);
+                    }
+
                     // Si "=" -> renvoi du result dans display pour relance calcul direct avec operator
                 } else {
                     const displayTxt = [currentValue[0], newDigit];
