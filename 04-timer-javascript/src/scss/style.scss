@@ -1,0 +1,27 @@
+@import './buttons.scss';
+@import './fonts.scss';
+@import './variables.scss';
+
+*{
+  margin: 0;
+  scroll-behavior: smooth;
+  .container {
+    text-align: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: antiquewhite;
+    h1{
+      font-family: $Bebas;
+      font-size: 4em;
+      padding-bottom: .5em;
+    }
+    .bloc-length{
+      display: flex;
+      font-family: $Montserrat;
+    }
+  }
+}
+  

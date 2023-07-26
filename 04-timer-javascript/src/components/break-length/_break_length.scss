@@ -1,0 +1,14 @@
+.length-control{
+    width: 300px;
+    font-size: 1.4em;
+    justify-content: center;
+    .break-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .btn-level{
+            display: inline-block;
+            width: 50px;
+        }
+    }
+}
