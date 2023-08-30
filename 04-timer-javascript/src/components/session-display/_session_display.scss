@@ -1,0 +1,22 @@
+.display-block{
+        width:40vh;
+        margin: 0 auto;
+        #timer-label{
+            border: 3px solid yellow;
+            border-radius: 15px;
+            padding: 1em 0 .5em;
+            #time-left{
+                height: 100px;
+                
+                .show-counter{
+                    display: flex;
+                    justify-content: center;
+                    padding: 2em;
+                    .danger{
+                        color: red;
+                        font-weight: 900;
+                    }
+                }
+            }
+        }
+    }

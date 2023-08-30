@@ -7,7 +7,7 @@ function BREAK_LENGTH() {
     const [breakLength, setBreakLength] = useState(5);
 
     return (
-        <div className="length-control">
+        <div className="display-block">
             <div id="break-label">Break Length</div>
             <div className="break-container">
                 <button className="btn-level" id="break-decrement" value="-">
@@ -18,7 +18,6 @@ function BREAK_LENGTH() {
                     <i className="fa-solid fa-minus"></i>
                 </button>
             </div>
-            
         </div>
     )
 }

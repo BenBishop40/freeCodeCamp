@@ -5,6 +5,7 @@
 *{
   margin: 0;
   scroll-behavior: smooth;
+  font-family: $Montserrat;
   .container {
     text-align: center;
     display: flex;
@@ -20,7 +21,6 @@
     }
     .bloc-length{
       display: flex;
-      font-family: $Montserrat;
     }
   }
 }

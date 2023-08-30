@@ -5,7 +5,7 @@ import './_session_length.scss';
 function SESSION_LENGTH() {
     const [session, setSession] = useState(25);
     return (
-        <div className="length-control">
+        <div className="display-block">
             <div id="session-label">Session Length</div>
             <div className="session-container">
                 <button className="btn-level" id="session-decrement" value="-">
