@@ -1,21 +1,37 @@
+@import '../../scss/variables.scss';
+
 .display-block{
         width:40vh;
         margin: 0 auto;
         #timer-label{
-            border: 3px solid yellow;
+            border: 5px solid $timerColor;
             border-radius: 15px;
             padding: 1em 0 .5em;
             #time-left{
+                font-size: 1em;
+                font-weight: 600;
                 height: 100px;
-                
                 .show-counter{
                     display: flex;
                     justify-content: center;
-                    padding: 2em;
+                    padding: 1em;
                     .danger{
                         color: red;
                         font-weight: 900;
                     }
+                    .expired{
+                        color: $timerColor;
+                    }
+                }
+                .control-panel{
+                    button{
+                        padding:3em 0;
+                    }
+                    i{
+                    color: $timerColor;
+                    padding: 0.5em;
+                    cursor: pointer;
+                }
                 }
             }
         }

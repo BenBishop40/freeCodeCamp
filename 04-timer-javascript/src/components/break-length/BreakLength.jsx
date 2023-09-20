@@ -6,16 +6,28 @@ function BREAK_LENGTH() {
 
     const [breakLength, setBreakLength] = useState(5);
 
+    const incrementBreakLength = () => {
+        if (breakLength <= 59) {
+            setBreakLength(breakLength+1);
+        }
+    }
+
+    const decrementBreakLength = () => {
+        if (breakLength > 1) {
+            setBreakLength(breakLength-1);
+        }
+    }
+
     return (
         <div className="display-block">
             <div id="break-label">Break Length</div>
             <div className="break-container">
-                <button className="btn-level" id="break-decrement" value="-">
-                    <i className="fa-solid fa-plus"></i>
+                <button className="btn-level" id="break-decrement" value="-" onClick={decrementBreakLength}>
+                    <i className="fa-solid fa-minus"></i>
                 </button>
                 <div className="btn-level" id="break-length">{breakLength}</div>
-                <button className="btn-level" id="break-increment" value="+">
-                    <i className="fa-solid fa-minus"></i>
+                <button className="btn-level" id="break-increment" value="+" onClick={incrementBreakLength}>
+                    <i className="fa-solid fa-plus"></i>
                 </button>
             </div>
         </div>

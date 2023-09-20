@@ -6,6 +6,8 @@
   margin: 0;
   scroll-behavior: smooth;
   font-family: $Montserrat;
+  // plus de curseur clignotant :
+  user-select: none;
   .container {
     text-align: center;
     display: flex;
@@ -18,6 +20,7 @@
       font-family: $Bebas;
       font-size: 4em;
       padding-bottom: .5em;
+      color: $timerColor;
     }
     .bloc-length{
       display: flex;
